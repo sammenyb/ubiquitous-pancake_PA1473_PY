@@ -1,6 +1,5 @@
 #testing git
 #!/usr/bin/env pybricks-micropython
-from msilib import sequence
 import sys
 
 # from project import __init__
@@ -44,8 +43,8 @@ rotate_cw = True
 rotation_swap_timer_max = 0
 rotation_swap_timer = 0
 
-def avg(stuff):
-    return sum(stuff) / len(stuff)
+def avg(list_of_stuff):
+    return sum(list_of_stuff) / len(list_of_stuff)
 
 
 def identify_color(rgb): #do not use this function on people or we'll get sued
