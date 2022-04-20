@@ -1,3 +1,4 @@
+#testing git
 #!/usr/bin/env pybricks-micropython
 from msilib import sequence
 import sys
@@ -72,15 +73,15 @@ def CollisionAvoidance():
     vehicle_detected = False
     if ultra_sensor.distance() < 150:
         vehicle_detected = True  #initialize avoid sequence
-    
+
     if vehicle_detected:
         robot.turn(20)
         robot.straight(200)
         robot.turn(-40)
         robot.straight(200)
-        robot.turn(20) 
+        robot.turn(20)
         #look for line again
-    
+
     return
 
 
@@ -109,7 +110,7 @@ def follow_line(colors):
                 robot.turn(2)
             else:
                 robot.turn(-2)
-            
+
 
 
         # if avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
@@ -129,10 +130,10 @@ def follow_line(colors):
         #     continue_driving = 1
 
 
-        
+
 
 def main():
-    
+
         loop_continue = 0
 
         while loop_continue == 0:
