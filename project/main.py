@@ -111,11 +111,13 @@ def follow_line(colors):
         #     else:
         #         robot.turn(-2)
 
-        if identify_color(left_light.rgb()) == colors[1]:
+        if identify_color(left_light.rgb()) == colors[2]:
             colors.pop(0)
 
-
-        if avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
+        if identify_color(left_light.rgb()) == colors[1]:
+            speed = 5
+            angle = 5
+        elif avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
             speed = 50
             angle = -20
         elif avg([40,40,40]) <= avg(left_light.rgb()) <= avg([60,60,60]): #mellan svart och vit
