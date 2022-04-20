@@ -94,40 +94,42 @@ def follow_line(colors):
         color_left = left_light.rgb()
         CollisionAvoidance()
 
-        if identify_color(color_left) in colors:
-            # check if right color is the correct next color here?
-            rotation_swap_timer_max = 5
-            rotation_swap_timer = rotation_swap_timer_max
-            angle = 0
-            speed = 50
-        else:
-            rotation_swap_timer -= 1
-            if rotation_swap_timer < 0:
-                rotate_cw = not rotate_cw
-                rotation_swap_timer_max += 5
-                rotation_swap_timer = rotation_swap_timer_max
-            if rotate_cw:
-                robot.turn(2)
-            else:
-                robot.turn(-2)
-
-
-
-        # if avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
-        #     speed = 50
-        #     angle = -20
-        # elif avg([40,40,40]) <= avg(left_light.rgb()) <= avg([60,60,60]): #mellan svart och vit
-        #     speed = 100
+        # if identify_color(color_left) in colors:
+        #     # check if right color is the correct next color here?
+        #     rotation_swap_timer_max = 5
+        #     rotation_swap_timer = rotation_swap_timer_max
         #     angle = 0
-        # elif avg([0,0,0]) <= avg(left_light.rgb()) < avg([40,40,40]): #svart
         #     speed = 50
-        #     angle = 20
-        # elif left_light.rgb == 0: #designatet vÃ¤rde   #??
-        #     speed = 20
-        #     angle = 90
-
         # else:
-        #     continue_driving = 1
+        #     rotation_swap_timer -= 1
+        #     if rotation_swap_timer < 0:
+        #         rotate_cw = not rotate_cw
+        #         rotation_swap_timer_max += 5
+        #         rotation_swap_timer = rotation_swap_timer_max
+        #     if rotate_cw:
+        #         robot.turn(2)
+        #     else:
+        #         robot.turn(-2)
+
+        if identify_color(left_light.rgb()) == colors[1]:
+            colors.pop(0)
+
+
+        if avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
+            speed = 50
+            angle = -20
+        elif avg([40,40,40]) <= avg(left_light.rgb()) <= avg([60,60,60]): #mellan svart och vit
+            speed = 100
+            angle = 0
+        elif avg([0,0,0]) <= avg(left_light.rgb()) < avg([40,40,40]): #svart
+            speed = 50
+            angle = 20
+        elif left_light.rgb == 0: #designatet vÃ¤rde   #??
+            speed = 20
+            angle = 90
+
+        else:
+            continue_driving = 1
 
 
 
