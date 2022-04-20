@@ -10,7 +10,6 @@ import sys
 
 # from pybricks.pupdevices import ForceSensor
 import time
-from statistics import mean as avg
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.hubs import EV3Brick
 from pybricks.tools import wait, StopWatch, DataLog
@@ -44,6 +43,9 @@ angle = 0
 rotate_cw = True
 rotation_swap_timer_max = 0
 rotation_swap_timer = 0
+
+def avg(stuff):
+    return sum(stuff) / len(stuff)
 
 
 def identify_color(rgb): #do not use this function on people or we'll get sued
