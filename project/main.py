@@ -138,7 +138,7 @@ def main():
 
         while loop_continue == 0:
             """ihuiedhcid"""
-            follow_line()
+            follow_line(["yellow", "brown", "green", "blue", "red"]) #"yellow", "brown", "green", "blue", "red"
 
 
 if __name__ == '__main__':
