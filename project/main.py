@@ -1,6 +1,6 @@
-#testing git
 #!/usr/bin/env pybricks-micropython
 import sys
+
 
 # from project import __init__
 # from project import pick_up as pu
@@ -43,57 +43,48 @@ rotate_cw = True
 rotation_swap_timer_max = 0
 rotation_swap_timer = 0
 
+
+def robot_status(status):
+    print("The robot is " + str(status) + "right now")
+
 def avg(list_of_stuff):
     return sum(list_of_stuff) / len(list_of_stuff)
 
 
-def identify_color(rgb): #do not use this function on people or we'll get sued
-    print(rgb)
-    red = rgb[0]
-    green = rgb[1]
-    blue = rgb[2]
-    if sum(rgb) < 10:
-        return "black"
-    elif green >= 0.75 * red and red >= 0.75 * green and blue < 0.2 * (red + green):
-        return "yellow"
-    elif red >= 0.75 * blue and blue >= 0.75 * red and green < 0.2 * (red + blue):
-        return "purple"
-    elif green > 0.25 * red and green < 0.75 * red and blue < 0.25 * red:
-        return "brown"
-    elif red > 2 * (green + blue): # ORDER MATTERS! This should remain *after* checking for brown.
-        return "red"
-    elif green > 2 * (red + blue):
-        return "green"
-    elif blue > 2 * (red + green):
-        return "blue"
-    else:
-        return "unknown"
 
 
-def CollisionAvoidance():
+def collision_avoidance():
+    robot_status(status="avoiding collision")
+    
     vehicle_detected = False
-    if ultra_sensor.distance() < 150:
+    if ultra_sensor.distance() < 200:
         vehicle_detected = True  #initialize avoid sequence
 
-    if vehicle_detected:
-        robot.turn(20)
-        robot.straight(200)
-        robot.turn(-40)
-        robot.straight(200)
-        robot.turn(20)
-        #look for line again
+    if vehicle_detected: #vehicle wheels rotate the wrong way
+        robot.turn(-20)
+        robot.straight(-200)
+        robot.turn(40)
+        robot.straight(-200)
+    
 
     return
+#def color_prio(current_prio):
+
+def angle_change(rgb_value):
+    return rgb_value/12
+
 
 
 def follow_line(colors):
+    robot_status(status="following line")
     global angle, speed, rotate_cw, rotation_swap_timer_max, rotation_swap_timer
     continue_driving = 0 # does this need to be an int?
-
     while continue_driving == 0:
-        robot.drive(speed, angle)
+        collision_avoidance()
         color_left = left_light.rgb()
-        CollisionAvoidance()
+        turnrate = angle_change(avg(color_left))
+        robot.drive(- (min(speed*(1/turnrate), 80)), angle*turnrate)
+        current_color = left_light.color()
 
         # if identify_color(color_left) in colors:
         #     # check if right color is the correct next color here?
@@ -111,39 +102,45 @@ def follow_line(colors):
         #         robot.turn(2)
         #     else:
         #         robot.turn(-2)
-
-        if identify_color(left_light.rgb()) == colors[2]:
+        
+        if len(colors) > 1 and current_color == colors[1]:
             colors.pop(0)
 
-        if identify_color(left_light.rgb()) == colors[1]:
-            speed = 5
-            angle = 5
-        elif avg([60,60,60]) < avg(left_light.rgb()) <= avg([100,100,100]): #vit
-            speed = 50
-            angle = -20
-        elif avg([40,40,40]) <= avg(left_light.rgb()) <= avg([60,60,60]): #mellan svart och vit
-            speed = 100
+        color_multiplier = 1
+        if current_color == Color.YELLOW:
+            color_multiplier = 0.4
+
+        if 20 < avg(left_light.rgb()) * color_multiplier <= 100 and current_color != colors[0]: #vit
+            speed = 40
+            angle = -10
+        elif 10 <= avg(left_light.rgb()) * color_multiplier <= 20 and current_color != colors[0]: #mellan svart och vit
+            speed = 70
             angle = 0
-        elif avg([0,0,0]) <= avg(left_light.rgb()) < avg([40,40,40]): #svart
-            speed = 50
-            angle = 20
-        elif left_light.rgb == 0: #designatet vÃ¤rde   #??
-            speed = 20
-            angle = 90
+        else: #svart
+            speed = 40
+            angle = 10
 
-        else:
-            continue_driving = 1
+        
+        
+        print("speed " + str(speed) + ", angle " + str(angle) + ", color rgb: " + str(color_left) + " = " + str(current_color))
 
+def reports(instructions):
+    print('instructions that will be performed: ', instructions)
 
-
+def cranelift():
+    print("motor angle " + str(crane_motor.angle()))
+    crane_motor.run_angle(15, -60, wait=True)
+    crane_motor.run_angle(15, 60, wait=True)
 
 def main():
-
-        loop_continue = 0
-
-        while loop_continue == 0:
-            """ihuiedhcid"""
-            follow_line(["yellow", "brown", "green", "blue", "red"]) #"yellow", "brown", "green", "blue", "red"
+    instructions = [Color.BLUE, Color.YELLOW, Color.BLUE]
+    loop_continue = 0
+    #cranelift()
+    reports(instructions)
+    while loop_continue == 0:
+        """ihuiedhcid"""
+        follow_line(instructions) #"yellow", "brown", "green", "blue", "red"
+        collision_avoidance()
 
 
 if __name__ == '__main__':
