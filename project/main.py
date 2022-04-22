@@ -45,7 +45,6 @@ rotation_swap_timer = 0
 route = []
 
 def ninety_degree_turn():
-    return
     print("Executing 90 degree turn")
     robot.straight(-60)
     robot.drive(80, 125)
@@ -53,7 +52,32 @@ def ninety_degree_turn():
     robot.straight(300)
     #robot.drive(0, 0)
 
-def identify_color(rgb): #do not use this function on people or we'll get sued
+def identify_color_v2(rgb):
+    return 0
+    red = rgb[0]
+    green = rgb[1]
+    blue = rgb[2]
+    if sum(rgb) < 5:
+        return "black"
+    elif green > 0.25 * red and green < 0.6 * red and blue < 0.25 * red:
+        return "brown"
+    elif red >= 0.4 * blue and blue >= 1.2 * red and green < 0.42 * (red + blue):
+        return "purple"
+    elif green >= 0.6 * red and red >= 0.8 * green and blue < 0.3 * (red + green):
+        return "yellow"
+    elif red > 1.6 * (green + blue):
+        return "red"
+    elif green > 1.6 * red + 1.2 * blue:
+        return "olive"
+    elif green > 1.6 * red + 1.2 * blue:
+        return "lime"
+    elif blue > 1.26 * red + 0.82 * green:
+        return "blue"
+    else:
+        return "white"
+
+
+def identify_color(rgb):
     red = rgb[0]
     green = rgb[1]
     blue = rgb[2]
@@ -61,7 +85,7 @@ def identify_color(rgb): #do not use this function on people or we'll get sued
         return Color.BLACK
     elif green >= 0.6 * red and red >= 0.8 * green and blue < 0.3 * (red + green):
         return Color.YELLOW
-    elif red >= 0.75 * blue and blue >= 0.75 * red and green < 0.2 * (red + blue):
+    elif red >= 0.4 * blue and blue >= 1.2 * red and green < 0.42 * (red + blue):
         return Color.PURPLE
     elif green > 0.25 * red and green < 0.6 * red and blue < 0.25 * red:
         return Color.BROWN
@@ -149,13 +173,13 @@ def follow_line(colors):
             angle = 10
 
 
-        if not current_color == Color.WHITE and len(route) > 0 and str(route[-1]) != str(current_color):
+        if not current_color == Color.WHITE and len(route) == 0:
             route.append(current_color)
             print("route: " + str(route))
-        elif not current_color == Color.WHITE:
+        elif not current_color == Color.WHITE and (str(route[-1]) != str(current_color)):
             route.append(current_color)
             print("route: " + str(route))
-        print("Test route:" + str(route[-1]) + " , " + str(current_color))
+            print("Test route:" + str(route[-1]) + " , " + str(current_color))
         print("speed " + str(speed) + ", angle " + str(angle))
 
 def reports(instructions):
