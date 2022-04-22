@@ -1,0 +1,390 @@
+Starting: brickrun --directory="/home/robot/ubiquitous-pancake_PA1473_PY/project" "/home/robot/ubiquitous-pancake_PA1473_PY/project/main.py"
+----------
+instructions that will be performed:  [Color.BLUE, Color.YELLOW, Color.BLUE]
+The robot is following Color.BLUE lineright now
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (10, 16, 17)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (7, 12, 14)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 10, 16)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 11, 18)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (32, 38, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 45, 46)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (36, 45, 50)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (32, 41, 46)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (18, 27, 30)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (6, 12, 15)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 8, 11)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (11, 19, 23)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (35, 41, 41)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (31, 37, 37)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (16, 23, 26)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (13, 21, 24)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (15, 23, 25)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (15, 23, 26)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (16, 26, 29)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (19, 25, 27)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 10, 14)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 10, 16)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (15, 23, 27)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (34, 41, 42)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (37, 45, 47)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (29, 39, 43)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (24, 32, 37)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 9, 13)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 9, 13)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (6, 12, 18)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 46, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (45, 53, 54)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (41, 49, 50)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (16, 24, 29)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (11, 19, 25)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (6, 11, 14)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 9, 14)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (15, 24, 28)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (45, 53, 53)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (43, 51, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (24, 32, 35)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 10, 18)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (6, 11, 16)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (22, 27, 27)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (30, 37, 39)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (26, 35, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (26, 33, 35)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 9, 13)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (4, 8, 14)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (14, 23, 26)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 44, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 43, 35)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (8, 14, 14)
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (24, 20, 4)
+Executing 90 degree turn
+route: [Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 10, 17)
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (5, 9, 16)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (22, 27, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 60, 64)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 56, 56)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 56, 57)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 55, 55)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (49, 47, 23)
+speed 40, angle -10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (49, 41, 8)
+route: [Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (46, 34, 2)
+speed 40, angle -10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (51, 40, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (53, 42, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (46, 35, 3)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (53, 43, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (51, 39, 3)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (51, 41, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (52, 42, 5)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (49, 38, 3)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.WHITE, color rgb: (52, 49, 18)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (45, 52, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 59, 62)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 59, 61)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 57, 58)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 56, 55)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 52, 45)
+speed 40, angle -10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (51, 41, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (47, 35, 3)
+speed 40, angle -10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (48, 37, 3)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (53, 42, 5)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (51, 37, 3)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (46, 32, 2)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.YELLOW, color rgb: (53, 39, 4)
+speed 40, angle -10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (50, 38, 4)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (43, 33, 2)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.YELLOW, built-in detection of color: Color.YELLOW, color rgb: (49, 38, 6)
+route: [Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW, Color.YELLOW]
+speed 40, angle 10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 49, 42)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (41, 46, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (46, 54, 54)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 57, 59)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 57, 59)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 56, 56)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (46, 55, 56)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 51, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (45, 52, 54)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 51, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 50, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (43, 49, 50)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 44, 44)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 43, 44)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (34, 38, 39)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (29, 32, 36)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (24, 28, 32)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (28, 31, 35)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (36, 40, 41)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (29, 32, 36)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.BLUE, color rgb: (18, 21, 29)
+speed 70, angle 0
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (14, 17, 26)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (26, 28, 33)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (31, 35, 36)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (24, 27, 33)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (20, 24, 31)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (35, 39, 40)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (37, 42, 43)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (37, 41, 42)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (33, 37, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (27, 31, 35)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (28, 31, 35)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (35, 39, 39)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 51, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (43, 51, 51)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (42, 48, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (42, 48, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 44, 43)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 44, 44)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (36, 40, 41)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (31, 35, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (32, 35, 38)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 44, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 45, 46)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (41, 46, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (40, 44, 47)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 44, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (36, 39, 41)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (32, 35, 37)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (31, 34, 36)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (29, 32, 36)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (40, 45, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 43, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (43, 49, 52)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (42, 47, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (40, 45, 46)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (41, 46, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (39, 44, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (38, 42, 43)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (40, 45, 45)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (40, 47, 46)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (41, 47, 47)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (42, 49, 48)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (42, 49, 49)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 52, 52)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (43, 51, 50)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (44, 53, 53)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (46, 56, 56)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (46, 55, 55)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 56, 58)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 56, 58)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (46, 55, 56)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 58, 59)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 58, 59)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (47, 58, 59)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 59, 62)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (48, 59, 62)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 60, 65)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 60, 64)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 60, 64)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 60, 64)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 60, 63)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 67)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 67)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (51, 62, 69)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (51, 62, 70)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 68)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (51, 62, 69)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (51, 63, 70)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 67)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 62, 68)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 65)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (50, 61, 65)
+speed 40, angle -10
+current color: Color.WHITE, built-in detection of color: Color.WHITE, color rgb: (49, 61, 63)
+Program ended by stop button
+----------
+Completed successfully.
