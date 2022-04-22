@@ -1,13 +1,13 @@
 lila 9, 9, 18
-olivgrön 12, 13, 4
 rosaröd 37, 16, 13
-svart (lager hörn) 4, 5, 2
 brun (lager) 10, 6, 4
-gul 42, 36, 4
 sky 0, 0, 0
 limegrön 8, 30, 8
 olivgrön 12, 13, 4
+olivgrön 12, 13, 4
 ljusblå 8, 19, 20
 svart (lager hörn) 4, 5, 2
+svart (lager hörn) 4, 5, 2
 svart (lager, inte-hörn) 4, 5, 4
+gul 42, 36, 4
 gul 42, 36, 3

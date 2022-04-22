@@ -1,4 +1,5 @@
 #!/usr/bin/env pybricks-micropython
+from copy import copy
 import sys
 
 
@@ -44,6 +45,16 @@ rotation_swap_timer_max = 0
 rotation_swap_timer = 0
 route = []
 
+reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
+"brown": (10, 6, 4),
+"purple": (10, 9, 18), 
+"yellow": (42, 36, 4), 
+"pink_red": (37, 16, 13), 
+"olive_green": (12, 13, 4), 
+"lime_green": (8, 30, 8), 
+"blue": (8, 19, 20), 
+"white": (42, 47, 48)}
+
 def ninety_degree_turn():
     print("Executing 90 degree turn")
     robot.straight(-60)
@@ -51,6 +62,42 @@ def ninety_degree_turn():
     wait(2000)
     robot.straight(300)
     #robot.drive(0, 0)
+
+def identify_color(rgb): #v3
+    #PLAN if we have issues with this function:
+    # add another copy of the problematic color, with different color values.
+    # put it in the dict as "black.2": (4, 4, 4)
+    # return "black.2".split('.')[0]
+    
+    rgb = copy(rgb) # don't modify original list
+
+    similarity_dict = dict()
+
+    for color_name, ref_values in reference_rgb.items():
+        ref_similarity = []
+
+        for i in range(3):
+            rgb[i] = max(rgb[i], 1) # avoids division by zero after this for-loop
+            
+            ref_similarity.append((rgb[i] + 3) / (ref_values[i] + 3)) # the +3 are there to minimize issues with low brightness values.
+        
+        # explanation for the line below: if the red channel is p% lower than the reference, we want *all* channels to be p% lower than the reference.
+        # If this is the case, the color may be the same as the reference color.
+        difference = sum([abs(x-y) for x in ref_similarity for y in ref_similarity])
+        # We also want to compare overall brightness: 
+        difference += max(avg(ref_similarity), 1 / avg(ref_similarity)) - 1
+        similarity_dict[color_name] = difference
+
+    #not super useful prints
+    # print(str(rgb))
+    # print(similarity_dict)
+    # print("min: ",  min(similarity_dict, key=similarity_dict.get))
+
+    #useful print
+    closest = sorted(similarity_dict, key=similarity_dict.get)
+    print(str(rgb), " - closest colors: ", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
+    return min(similarity_dict, key=similarity_dict.get)
+
 
 def identify_color_v2(rgb):
     return 0
@@ -77,7 +124,7 @@ def identify_color_v2(rgb):
         return "white"
 
 
-def identify_color(rgb):
+def identify_color_old(rgb):
     red = rgb[0]
     green = rgb[1]
     blue = rgb[2]
@@ -130,10 +177,10 @@ def collision_avoidance():
 
 
 def angle_change(rgb_value):
-    if rgb_value > 15:
-        return rgb_value/16
+    if rgb_value > 17:
+        return rgb_value/17
     else:
-        return 40/(rgb_value + 1) #no division by zero
+        return 42/(rgb_value + 1) #no division by zero
 
 
 
@@ -147,9 +194,17 @@ def follow_line(colors):
         current_color = identify_color(color_left)
 
         color_multiplier = 1
-        if current_color == Color.YELLOW:
-            color_multiplier = 0.4
-
+        # if current_color == "yellow":
+        #     color_multiplier = 0.4
+        # if current_color == "pink_red":
+        #     color_multiplier = 0.5
+        # if current_color == "lime_green":
+        #     color_multiplier = 0.7
+        # if current_color == "blue":
+        #     color_multiplier = 0.7
+        if current_color is not "white":
+            color_multiplier = 1 / avg(reference_rgb[current_color])
+        
         turnrate = angle_change(avg(color_left) * color_multiplier)
         robot.drive(- (min(8 + speed*(3/turnrate), 70)), angle*turnrate)
         #print("current color: " + str(current_color) + ", color rgb: " + str(color_left))
@@ -162,10 +217,10 @@ def follow_line(colors):
             # robot.straight(130) #backwards
             # robot.turn(230) #turn doesn't work quite properly so this ain't degrees
             # robot.straight(220) #backwards
-        elif 23 < avg(left_light.rgb()) * color_multiplier <= 100 and current_color != colors[0]:
+        elif 2.4 < avg(color_left) * color_multiplier and current_color != colors[0]:
             speed = 40
             angle = -10
-        elif 14 <= avg(left_light.rgb()) * color_multiplier <= 23 and current_color != colors[0]:
+        elif 1.5 <= avg(color_left) * color_multiplier <= 2.4 and current_color != colors[0]:
             speed = 70
             angle = 0
         else:
