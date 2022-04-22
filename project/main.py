@@ -45,6 +45,7 @@ rotation_swap_timer = 0
 route = []
 
 def ninety_degree_turn():
+    return
     print("Executing 90 degree turn")
     robot.straight(-60)
     robot.drive(80, 125)
@@ -58,17 +59,17 @@ def identify_color(rgb): #do not use this function on people or we'll get sued
     blue = rgb[2]
     if sum(rgb) < 10:
         return Color.BLACK
-    elif green >= 0.75 * red and red >= 0.75 * green and blue < 0.2 * (red + green):
+    elif green >= 0.6 * red and red >= 0.8 * green and blue < 0.3 * (red + green):
         return Color.YELLOW
     elif red >= 0.75 * blue and blue >= 0.75 * red and green < 0.2 * (red + blue):
         return Color.PURPLE
     elif green > 0.25 * red and green < 0.6 * red and blue < 0.25 * red:
         return Color.BROWN
-    elif red > 1.5 * (green + blue): # ORDER MATTERS! This should remain *after* checking for brown.
+    elif red > 1.6 * (green + blue): # ORDER MATTERS! This should remain *after* checking for brown.
         return Color.RED
-    elif green > 1.9 * red + 1.3 * blue:
+    elif green > 1.6 * red + 1.2 * blue:
         return Color.GREEN
-    elif blue > 1.6 * red + 1.0 * green:
+    elif blue > 1.26 * red + 0.82 * green:
         return Color.BLUE
     else:
         return Color.WHITE
@@ -119,15 +120,17 @@ def follow_line(colors):
     while continue_driving == 0:
         collision_avoidance()
         color_left = left_light.rgb()
-        turnrate = angle_change(avg(color_left))
-        robot.drive(- (min(8 + speed*(3/turnrate), 70)), angle*turnrate)
         current_color = identify_color(color_left)
-        print("current color: " + str(current_color) + ", built-in detection of color: " + str(left_light.color()) + ", color rgb: " + str(color_left))
-
 
         color_multiplier = 1
         if current_color == Color.YELLOW:
-            color_multiplier = 0.24
+            color_multiplier = 0.4
+
+        turnrate = angle_change(avg(color_left) * color_multiplier)
+        robot.drive(- (min(8 + speed*(3/turnrate), 70)), angle*turnrate)
+        #print("current color: " + str(current_color) + ", color rgb: " + str(color_left))
+        print("current color: " + str(current_color) + ", built-in detection of color: " + str(left_light.color()) + ", color rgb: " + str(color_left))
+
 
         if len(colors) > 1 and current_color == colors[1]:
             colors.pop(0)
@@ -145,14 +148,14 @@ def follow_line(colors):
             speed = 40
             angle = 10
 
-        """
-        if not current_color == Color.WHITE and len(route) > 0 and route[-1] != current_color:
+
+        if not current_color == Color.WHITE and len(route) > 0 and str(route[-1]) != str(current_color):
             route.append(current_color)
             print("route: " + str(route))
         elif not current_color == Color.WHITE:
             route.append(current_color)
             print("route: " + str(route))
-        """
+        print("Test route:" + str(route[-1]) + " , " + str(current_color))
         print("speed " + str(speed) + ", angle " + str(angle))
 
 def reports(instructions):
