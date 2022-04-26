@@ -108,7 +108,7 @@ def identify_color(rgb): #v3
     return min(similarity_dict, key=similarity_dict.get).split(".")[0]
 
 def identify_color_v2(rgb):
-    return
+    return 0
     red = rgb[0]
     green = rgb[1]
     blue = rgb[2]
@@ -133,7 +133,6 @@ def identify_color_v2(rgb):
 
 
 def identify_color_old(rgb):
-    return
     red = rgb[0]
     green = rgb[1]
     blue = rgb[2]
@@ -180,7 +179,17 @@ def collision_avoidance():
         robot.turn(90)
         robot.straight(-300)
 
+
     return
+
+
+
+def angle_change(normalized_rgb):
+    if normalized_rgb > 1:
+        return min(normalized_rgb, 2)
+    else:
+        return 1/(normalized_rgb + 0.5) #no division by zero, and no excessively high numbers
+
 
 
 def follow_line(colors):
@@ -192,11 +201,13 @@ def follow_line(colors):
         current_color = identify_color(color_left)
         robot_status(status="following " + str(current_color) + " line")
 
-
-        color_multiplier = 1 / avg(reference_rgb[current_color])
+        if current_color is not "white":
+            color_multiplier = 1 / avg(reference_rgb[current_color])
+        else:
+            color_multiplier = 0.06
         
-        
-        robot.drive(-speed, -angle)
+        turnrate = angle_change(avg(color_left) * color_multiplier)
+        robot.drive(- (min(8 + speed*(3/turnrate), 75)), -angle*turnrate)
         #print("current color: " + str(current_color) + ", color rgb: " + str(color_left))
         print("color rgb: " + str(color_left) + ", current color: " + str(current_color) + ", built-in detection of color (performance issues): " + "str(left_light.color())")
 
@@ -209,23 +220,21 @@ def follow_line(colors):
             # robot.straight(130) #backwards
             # robot.turn(230) #turn doesn't work quite properly so this ain't degrees
             # robot.straight(220) #backwards
-        elif current_color == "white":
-            pass
         elif 2.4 < avg(color_left) * color_multiplier and current_color != colors[0]:
-            angle = -10 * avg(color_left) * color_multiplier
-            speed = 30
+            speed = 25
+            angle = -14
         elif 1.5 <= avg(color_left) * color_multiplier <= 2.4 and current_color != colors[0]:
-            angle = 0
             speed = 70
+            angle = 0
         else:
-            angle = 90 / (avg(color_left) * color_multiplier)
-            speed = 35
+            speed = 38
+            angle = 60
 
 
-        if not current_color == "white" and len(route) == 0:
+        if not current_color == Color.WHITE and len(route) == 0:
             route.append(current_color)
             print("route: " + str(route))
-        elif not current_color == "white" and (str(route[-1]) != str(current_color)):
+        elif not current_color == Color.WHITE and (str(route[-1]) != str(current_color)):
             route.append(current_color)
             print("route: " + str(route))
             print("Test route:" + str(route[-1]) + " , " + str(current_color))
