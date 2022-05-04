@@ -44,6 +44,7 @@ rotate_cw = True
 rotation_swap_timer_max = 0
 rotation_swap_timer = 0
 route = []
+choosen_warehouse = "pink_red"
 
 reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
 "brown": (10, 6, 4),
@@ -51,18 +52,20 @@ reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of 
 "yellow": (42, 36, 4), 
 "pink_red": (37, 16, 13), 
 "olive_green": (12, 13, 4), 
+"olive_green.2": (15, 13, 8), 
 "lime_green": (8, 30, 8), 
 "blue": (8, 19, 20), 
 "white": (42, 47, 48),
-"orange": (72, 23, 19), #not part of final track
-"red": (49, 10, 13), #not part of final track
-"red.2": (55, 14, 15) #not part of final track
+"white.2": (40, 38, 36)
+#"orange": (72, 23, 19), #not part of final track
+#"red": (49, 10, 13), #not part of final track
+#"red.2": (55, 14, 15) #not part of final track
 }
 
 def ninety_degree_turn():
     print("Executing 90 degree turn")
     robot.straight(-60)
-    robot.drive(80, -125)
+    robot.drive(80, -110)
     wait(2000)
     robot.straight(300)
     #robot.drive(0, 0)
@@ -104,7 +107,7 @@ def identify_color(rgb): #v3
 
     #useful print
     closest = sorted(similarity_dict, key=similarity_dict.get)
-    print(str(rgb), " - closest colors: ", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
+    print(str(rgb), " - closest colors:", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
     return min(similarity_dict, key=similarity_dict.get).split(".")[0]
 
 def identify_color_v2(rgb):
@@ -170,11 +173,13 @@ def avg(list_of_stuff):
 def collision_avoidance():
 
     vehicle_detected = False
-    if ultra_sensor.distance() < 200:
+    if ultra_sensor.distance() < 350:
         vehicle_detected = True  #initialize avoid sequence
         robot_status(status="avoiding collision")
 
     if vehicle_detected: #vehicle wheels rotate the wrong way
+        wait(2000)
+        return
         robot.turn(-70)
         robot.straight(-200)
         robot.turn(90)
@@ -183,45 +188,67 @@ def collision_avoidance():
     return
 
 
+
 def follow_line(colors):
+    copy_colors_reverse = colors[::-1]
+    print(copy_colors_reverse)
+    #print(choosen_warehouse)
     global angle, speed, rotate_cw, rotation_swap_timer_max, rotation_swap_timer
     continue_driving = 0 # does this need to be an int?
     while continue_driving == 0:
         collision_avoidance()
         color_left = left_light.rgb()
+        if avg(color_left) == 0:
+            color_left = (1,0,0) #avoid div by 0
         current_color = identify_color(color_left)
         robot_status(status="following " + str(current_color) + " line")
 
 
         color_multiplier = 1 / avg(reference_rgb[current_color])
         
-        
         robot.drive(-speed, -angle)
         #print("current color: " + str(current_color) + ", color rgb: " + str(color_left))
         print("color rgb: " + str(color_left) + ", current color: " + str(current_color) + ", built-in detection of color (performance issues): " + "str(left_light.color())")
+        
 
-
-        if len(colors) > 1 and current_color == colors[1]:
+        if len(colors) == 1:
+            colors = copy_colors_reverse
+        elif current_color != "white" and current_color != colors[0] and current_color != colors[1]:
+            angle = 0
+            speed = 200
+        elif len(colors) > 1 and current_color == colors[1]:
             colors.pop(0)
-            print(current_color)
+            print("changing color - found ", current_color)
             print(colors)
-            ninety_degree_turn()
+            if colors[0] != "black":
+                ninety_degree_turn()
+            else:
+                print("detected black. Turning around.")
+                robot.turn(170)
             # robot.straight(130) #backwards
             # robot.turn(230) #turn doesn't work quite properly so this ain't degrees
             # robot.straight(220) #backwards
         elif current_color == "white":
-            pass
-        elif 2.4 < avg(color_left) * color_multiplier and current_color != colors[0]:
-            angle = -10 * avg(color_left) * color_multiplier
-            speed = 30
-        elif 1.5 <= avg(color_left) * color_multiplier <= 2.4 and current_color != colors[0]:
+            angle = -28# * avg(color_left) * color_multiplier
+            speed = 55
+        elif 2.2 < avg(color_left) * color_multiplier and current_color != colors[0]:
+            angle = -12 * avg(color_left) * color_multiplier
+            speed = 45
+        elif 1.2 <= avg(color_left) * color_multiplier <= 2.2 and current_color != colors[0]:
             angle = 0
-            speed = 70
+            speed = 80
         else:
-            angle = 90 / (avg(color_left) * color_multiplier)
-            speed = 35
-
-
+            relative_brightness_cubed = (avg(color_left) * color_multiplier) ** 2
+            if relative_brightness_cubed < 0.8:
+                relative_brightness_cubed = 0.8
+            if current_color == "red_pink":
+                relative_brightness_cubed -= 0.37
+            angle = 84 / relative_brightness_cubed #how much the robot turns when colored line is detected
+            
+            speed = 21 * relative_brightness_cubed - 54
+            
+                
+        ''''
         if not current_color == "white" and len(route) == 0:
             route.append(current_color)
             print("route: " + str(route))
@@ -230,6 +257,7 @@ def follow_line(colors):
             print("route: " + str(route))
             print("Test route:" + str(route[-1]) + " , " + str(current_color))
         print("speed " + str(speed) + ", angle " + str(angle))
+        '''
 
 def reports(instructions):
     print('instructions that will be performed: ', instructions)
@@ -241,15 +269,15 @@ def cranelift():
     # crane_motor.run_angle(15, 60, wait=True)
 
 def main():
-    instructions = ["orange", "red", "orange"]
+    #choosen_warehouse = input("Select warehouse 'pink_red' or 'blue': ")
+    instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
+    #reversed_instructions = instructions.copy().reverse()
     loop_continue = 0
     #cranelift()
     reports(instructions)
     while loop_continue == 0:
         """ihuiedhcid()"""
         follow_line(instructions) #"yellow", "brown", "green", "blue", "red"
-
-
 
 
 if __name__ == '__main__':
