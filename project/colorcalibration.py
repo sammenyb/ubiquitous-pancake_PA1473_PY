@@ -89,4 +89,5 @@ while fortsatt == 0:
     wait(400)
     farg = left_light.rgb()
     print("color rgb: " + str(farg) + ", current color: " + str(identify_color(farg)) + ", built-in detection of color: " + str(left_light.color()))
-
+    ev3.screen.clear()
+    ev3.screen.draw_text(30, 40, str(farg))

@@ -2,9 +2,7 @@
 from copy import copy
 import sys
 
-# import statistics
-# list_test = [3,2,1,5,5]
-# print(statistics.median([3,2,5,5]))
+
 # from project import __init__
 # from project import pick_up as pu
 
@@ -45,20 +43,18 @@ angle = 0
 route = []
 start_time = time.time()
 
-color_list =[]
-
-
 reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
 "brown": (10, 6, 4),
-"purple": (8, 9, 20), 
+"purple": (10, 9, 18), 
 "purple.2": (12, 7, 37), 
 "yellow": (42, 36, 4), 
-"pink_red": (36, 16, 13), 
-"pink_red.2": (30, 15, 20), 
-"olive_green": (12, 15, 4), 
-"olive_green.2": (10, 15, 9), 
+"pink_red": (37, 16, 13), 
+"olive_green": (12, 13, 4), 
+"olive_green.2": (15, 13, 8), 
+"olive_green.3": (17, 14, 16), 
 "lime_green": (8, 30, 8), 
-"blue": (8, 19, 22), 
+"blue": (8, 19, 20), 
+<<<<<<< HEAD
 #"blue.2": (9, 17, 30), 
 #"blue.2": (14, 28, 75), 
 "white": (93, 83, 95),
@@ -67,51 +63,29 @@ reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of 
 #"red": (49, 10, 13), #not part of final track
 #"red.2": (55, 14, 15) #not part of final track
 }
+=======
+"white": (42, 47, 48)}
+>>>>>>> parent of d712365 (tried to fix line following)
 
-color_calibration = [0, 0, 0]
-
-def median(val_lists):
-    """only use with lists of uneven lengths"""
-    calc_list = [[], [], []]
-    for val_list in (val_lists):
-        for i, val in enumerate(val_list):
-            calc_list[i].append(val)
-            
-    out_list = []
-    for val_list in calc_list:
-        out_list.append(sorted(val_list)[int(len(val_list) / 2)])
-    return out_list
-
-def calibrate(rgb):
-    global color_calibration
-    rgb = list(rgb)
-    for i in range(len(rgb)):
-            rgb[i] = max(rgb[i], 1)
-    color_calibration = [reference_rgb["pink_red"][0] / rgb[0], reference_rgb["pink_red"][1] / rgb[1], reference_rgb["pink_red"][2] / rgb[2]]
-    #color_calibration = [0,0,0]
-    print("color_calibration:", color_calibration)
-"""
-test_text = ""
-def msg(text):
-    ev3.screen.clear()
-    ev3.screen.draw_text(20, 50, text)
-"""
 def ninety_degree_turn():
     print("Executing 90 degree turn")
     robot.straight(-60)
-    robot.drive(80, -115)
+<<<<<<< HEAD
+    robot.drive(80, -110)
+=======
+    robot.drive(80, 125)
+>>>>>>> parent of d712365 (tried to fix line following)
     wait(2000)
-    robot.straight(170)
+    robot.straight(300)
     #robot.drive(0, 0)
 
-
-def identify_color(rgb, return_with_number=False): #v3
+def identify_color(rgb): #v3
     #PLAN if we have issues with this function:
     # add another copy of the problematic color, with different color values.
     # put it in the dict as "black.2": (4, 4, 4)
     # return "black.2".split('.')[0]
     
-    rgb = list(copy(rgb)) # don't modify original list
+    rgb = copy(rgb) # don't modify original list
 
     similarity_dict = dict()
 
@@ -125,13 +99,9 @@ def identify_color(rgb, return_with_number=False): #v3
         
         # explanation for the line below: if the red channel is p% lower than the reference, we want *all* channels to be p% lower than the reference.
         # If this is the case, the color may be the same as the reference color.
-        #print(color_name, rgb)
-        #print([abs(x-y) for x in ref_similarity for y in ref_similarity])
         difference = sum([abs(x-y) for x in ref_similarity for y in ref_similarity])
         # We also want to compare overall brightness: 
-        #print(avg(ref_similarity))
-        difference += 2 * max(avg(rgb) / avg(ref_values), avg(ref_values) / avg(rgb)) - 1
-        #print(max(avg(ref_similarity), 1 / avg(ref_similarity)) - 1)
+        difference += max(avg(ref_similarity), 1 / avg(ref_similarity)) - 1
         similarity_dict[color_name] = difference
 
     #not super useful prints
@@ -141,12 +111,61 @@ def identify_color(rgb, return_with_number=False): #v3
 
     #useful print
     closest = sorted(similarity_dict, key=similarity_dict.get)
+<<<<<<< HEAD
     print(str(round(time.time() - start_time, 3)) + "s:", str(rgb), " - closest colors:", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
-    if return_with_number:
-        return min(similarity_dict, key=similarity_dict.get)
-    else:
-        return min(similarity_dict, key=similarity_dict.get).split(".")[0]
+    return min(similarity_dict, key=similarity_dict.get).split(".")[0]
 
+=======
+    print(str(rgb), " - closest colors: ", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
+    return min(similarity_dict, key=similarity_dict.get)
+
+
+def identify_color_v2(rgb):
+    return 0
+    red = rgb[0]
+    green = rgb[1]
+    blue = rgb[2]
+    if sum(rgb) < 5:
+        return "black"
+    elif green > 0.25 * red and green < 0.6 * red and blue < 0.25 * red:
+        return "brown"
+    elif red >= 0.4 * blue and blue >= 1.2 * red and green < 0.42 * (red + blue):
+        return "purple"
+    elif green >= 0.6 * red and red >= 0.8 * green and blue < 0.3 * (red + green):
+        return "yellow"
+    elif red > 1.6 * (green + blue):
+        return "red"
+    elif green > 1.6 * red + 1.2 * blue:
+        return "olive"
+    elif green > 1.6 * red + 1.2 * blue:
+        return "lime"
+    elif blue > 1.26 * red + 0.82 * green:
+        return "blue"
+    else:
+        return "white"
+
+
+def identify_color_old(rgb):
+    red = rgb[0]
+    green = rgb[1]
+    blue = rgb[2]
+    if sum(rgb) < 10:
+        return Color.BLACK
+    elif green >= 0.6 * red and red >= 0.8 * green and blue < 0.3 * (red + green):
+        return Color.YELLOW
+    elif red >= 0.4 * blue and blue >= 1.2 * red and green < 0.42 * (red + blue):
+        return Color.PURPLE
+    elif green > 0.25 * red and green < 0.6 * red and blue < 0.25 * red:
+        return Color.BROWN
+    elif red > 1.6 * (green + blue): # ORDER MATTERS! This should remain *after* checking for brown.
+        return Color.RED
+    elif green > 1.6 * red + 1.2 * blue:
+        return Color.GREEN
+    elif blue > 1.26 * red + 0.82 * green:
+        return Color.BLUE
+    else:
+        return Color.WHITE
+>>>>>>> parent of d712365 (tried to fix line following)
 
 def robot_status(status):
     print("The robot is " + str(status) + "right now")
@@ -165,7 +184,7 @@ def collision_avoidance():
 
     vehicle_detected = False
     ultra_distance = ultra_sensor.distance()
-    if ultra_distance < 320:
+    if ultra_distance < 345:
         vehicle_detected = True  #initialize avoid sequence
         print("avoiding collision at " + str(round(time.time() - start_time, 3)) + "s. Distance: " + str(ultra_distance))
 
@@ -178,51 +197,56 @@ def collision_avoidance():
         robot.turn(90)
         robot.straight(-300)
 
+
     return
 
 
 
+<<<<<<< HEAD
 def follow_line(colors):
     copy_colors_reverse = colors[::-1]
     print(copy_colors_reverse)
     #print(choosen_warehouse)
-    global angle, speed, color_list
+    global angle, speed
+=======
+def angle_change(rgb_value):
+    if rgb_value > 17:
+        return rgb_value/17
+    else:
+        return 42/(rgb_value + 1) #no division by zero
+
+
+
+def follow_line(colors):
+    robot_status(status="following " + str(left_light.color()) + " line")
+    global angle, speed, rotate_cw, rotation_swap_timer_max, rotation_swap_timer
+>>>>>>> parent of d712365 (tried to fix line following)
     continue_driving = 0 # does this need to be an int?
     while continue_driving == 0:
         collision_avoidance()
         color_left = left_light.rgb()
+<<<<<<< HEAD
         if avg(color_left) == 0:
             color_left = (1,0,0) #avoid div by 0
 
-        adj_color_left = [color_calibration[0] * color_left[0], color_calibration[1] * color_left[1], color_calibration[2] * color_left[2]]
-        for i in range(len(adj_color_left)):
-            adj_color_left[i] = max(adj_color_left[i], 1)
+        brightness_mod = 1.5 #may need to be per-channel.
+        adj_color_left = (brightness_mod * color_left[0], brightness_mod * color_left[1], brightness_mod * color_left[2])
 
-        color_list.append(adj_color_left)
-        if len(color_list) > 5:
-            color_list.pop(0)
-        med_value = median(color_list)
-        
-        med_color = identify_color(med_value)
         current_color = identify_color(adj_color_left)
+        robot_status(status="following " + str(current_color) + " line")
 
 
-        robot_status(status="Searching for " + str(colors) + ", and following " + str(current_color) + " line")
-
-        color_multiplier = 1 / avg(reference_rgb[identify_color(adj_color_left, True)])
+        color_multiplier = 1 / avg(reference_rgb[current_color])
         # this always looks at the first one in the list!
         
-        if len(colors) >= 2 and current_color == colors[1]:
-            speed *= 0.15
-            angle *= 0.17
         robot.drive(-speed, -angle)
         
         if len(colors) == 1:
             colors = copy_colors_reverse
         elif current_color != "white" and current_color != colors[0] and current_color != colors[1]:
             angle = 0
-            speed = 30
-        elif len(colors) > 1 and med_color == colors[1]:
+            speed = 200
+        elif len(colors) > 1 and current_color == colors[1]:
             colors.pop(0)
             print("changing color - found ", current_color)
             print(colors)
@@ -232,30 +256,70 @@ def follow_line(colors):
                 print("detected black. Turning around.")
                 robot.turn(170)
         elif current_color == "white":
-            angle = -26# * avg(color_left) * color_multiplier
+            angle = -28# * avg(color_left) * color_multiplier
             speed = 55
         elif 2.2 < avg(color_left) * color_multiplier and current_color != colors[0]:
             angle = -12 * avg(color_left) * color_multiplier
-            speed = 40
+            speed = 45
         elif 1.2 <= avg(color_left) * color_multiplier <= 2.2 and current_color != colors[0]:
             angle = 0
-            speed = 45
+            speed = 80
         else:
             relative_brightness = (avg(color_left) * color_multiplier) ** 2
             if relative_brightness < 0.8:
                 relative_brightness = 0.8
             if current_color == "red_pink":
-                relative_brightness -= 0.2
-            angle = 75 / relative_brightness #how much the robot turns when colored line is detected
+                relative_brightness -= 0.37
+            angle = 84 / relative_brightness #how much the robot turns when colored line is detected
             
-            speed = min(50, 20 * relative_brightness - 58)
+            speed = 21 * relative_brightness - 54
             
                 
         ''''
         if not current_color == "white" and len(route) == 0:
+=======
+        current_color = identify_color(color_left)
+
+        color_multiplier = 1
+        # if current_color == "yellow":
+        #     color_multiplier = 0.4
+        # if current_color == "pink_red":
+        #     color_multiplier = 0.5
+        # if current_color == "lime_green":
+        #     color_multiplier = 0.7
+        # if current_color == "blue":
+        #     color_multiplier = 0.7
+        if current_color is not "white":
+            color_multiplier = 1 / avg(reference_rgb[current_color])
+        
+        turnrate = angle_change(avg(color_left) * color_multiplier)
+        robot.drive(- (min(8 + speed*(3/turnrate), 70)), angle*turnrate)
+        #print("current color: " + str(current_color) + ", color rgb: " + str(color_left))
+        print("current color: " + str(current_color) + ", built-in detection of color: " + str(left_light.color()) + ", color rgb: " + str(color_left))
+
+
+        if len(colors) > 1 and current_color == colors[1]:
+            colors.pop(0)
+            ninety_degree_turn()
+            # robot.straight(130) #backwards
+            # robot.turn(230) #turn doesn't work quite properly so this ain't degrees
+            # robot.straight(220) #backwards
+        elif 2.4 < avg(color_left) * color_multiplier and current_color != colors[0]:
+            speed = 40
+            angle = -10
+        elif 1.5 <= avg(color_left) * color_multiplier <= 2.4 and current_color != colors[0]:
+            speed = 70
+            angle = 0
+        else:
+            speed = 40
+            angle = 10
+
+
+        if not current_color == Color.WHITE and len(route) == 0:
+>>>>>>> parent of d712365 (tried to fix line following)
             route.append(current_color)
             print("route: " + str(route))
-        elif not current_color == "white" and (str(route[-1]) != str(current_color)):
+        elif not current_color == Color.WHITE and (str(route[-1]) != str(current_color)):
             route.append(current_color)
             print("route: " + str(route))
             print("Test route:" + str(route[-1]) + " , " + str(current_color))
@@ -272,9 +336,12 @@ def cranelift():
     # crane_motor.run_angle(15, 60, wait=True)
 
 def main():
-    instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
+<<<<<<< HEAD
+    instructions = [identify_color(left_light.rgb()), "olive_green", "pink_red"]
+=======
+    instructions = [Color.BLUE, Color.YELLOW, Color.BLUE]
+>>>>>>> parent of d712365 (tried to fix line following)
     loop_continue = 0
-    calibrate(left_light.rgb())
     #cranelift()
     reports(instructions)
     while loop_continue == 0:

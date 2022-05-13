@@ -90,12 +90,7 @@ def calibrate(rgb):
     color_calibration = [reference_rgb["pink_red"][0] / rgb[0], reference_rgb["pink_red"][1] / rgb[1], reference_rgb["pink_red"][2] / rgb[2]]
     #color_calibration = [0,0,0]
     print("color_calibration:", color_calibration)
-"""
-test_text = ""
-def msg(text):
-    ev3.screen.clear()
-    ev3.screen.draw_text(20, 50, text)
-"""
+
 def ninety_degree_turn():
     print("Executing 90 degree turn")
     robot.straight(-60)
@@ -143,7 +138,7 @@ def identify_color(rgb, return_with_number=False): #v3
     closest = sorted(similarity_dict, key=similarity_dict.get)
     print(str(round(time.time() - start_time, 3)) + "s:", str(rgb), " - closest colors:", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
     if return_with_number:
-        return min(similarity_dict, key=similarity_dict.get)
+        min(similarity_dict, key=similarity_dict.get)
     else:
         return min(similarity_dict, key=similarity_dict.get).split(".")[0]
 
@@ -209,7 +204,8 @@ def follow_line(colors):
 
         robot_status(status="Searching for " + str(colors) + ", and following " + str(current_color) + " line")
 
-        color_multiplier = 1 / avg(reference_rgb[identify_color(adj_color_left, True)])
+
+        color_multiplier = 1 / avg(reference_rgb[current_color])
         # this always looks at the first one in the list!
         
         if len(colors) >= 2 and current_color == colors[1]:
@@ -246,9 +242,9 @@ def follow_line(colors):
                 relative_brightness = 0.8
             if current_color == "red_pink":
                 relative_brightness -= 0.2
-            angle = 75 / relative_brightness #how much the robot turns when colored line is detected
+            angle = 60 / relative_brightness #how much the robot turns when colored line is detected
             
-            speed = min(50, 20 * relative_brightness - 58)
+            speed = min(50, 20 * relative_brightness - 52)
             
                 
         ''''
