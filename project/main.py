@@ -38,6 +38,7 @@ left_light = ColorSensor(Port.S3)
 
 ultra_sensor = UltrasonicSensor(Port.S4)
 
+
 # Initialize the drive base.
 robot = DriveBase(left_motor, right_motor, wheel_diameter=47, axle_track=128)
 
@@ -294,10 +295,11 @@ def main_tmp():
             robot.drive(-25,-20)
 
         elif correction <= 20: # Dark, at color, turn right a lot
-            passed_line = False
-            lines_passed = 0
-            while lines_passed != 10:
-                lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
+            robot.drive(-25,-200)
+            # passed_line = False
+            # lines_passed = 0
+            # while lines_passed != 5:
+            #     lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
 
             print('sharp')
 
@@ -310,49 +312,39 @@ def main_tmp():
         elif 81 <= correction: #Only white is detected turn left
             robot.drive(-10, 50)
 
-def drive_tmp(times_passed,passed_line):
+
+def drive_tmp(times_passed,passed_line, turn_angle):
     print(' ')
     if int(times_passed) % 2 == 0:
         print("turning left")
-        robot.drive(-80,120)
+        robot.drive(-100,turn_angle)
         # direction_toggle = robot.drive(-50,20)
     else:
-        robot.drive(-80,-120)
+        robot.drive(-100,-turn_angle)
         print("turning right")
         # direction_toggle = robot.drive(-50,-20)
     #--------------------------------------------------
-    if left_light.reflection() >= 70 and passed_line == True: # Passed line and on white
+    if passed_line == True and left_light.color() == Color.WHITE: # Passed line and on white
         passed_line = False
+        turn_angle += 3
         times_passed += 1
         print("Passed line and on white")
-    elif left_light.reflection() < 70 and passed_line == False: # On line
+    elif passed_line == False and left_light.color() != Color.WHITE: # On line
         print("On Line")
+        turn_angle = 60
         passed_line = True
-    elif left_light.reflection() > 80 and passed_line == False: # On white, haven't passed
+    elif passed_line == False and left_light.color() == Color.WHITE: # On white, haven't passed
         print("On white, haven't passed")
+        turn_angle +=3
     print('Times: ',times_passed)
-    return times_passed,passed_line
+    return times_passed,passed_line, turn_angle
 
 
 
-
-
-    # if passed_line == False and left_light.reflection() >= 70:
-    #     direction_toggle
-
-    # elif left_light.reflection() < 70:
-    #     direction_toggle
-    #     passed_line = True
-    #     print("On Line")
-
-    # elif passed_line == True and left_light.reflection() >= 70:
-    #     += 1
-
-    #     print("Changing direction")
 
 
 def main():
-    #turn_angle = 60
+    turn_angle = 60
     passed_line = False
     lines_passed = 0
     instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
@@ -366,8 +358,8 @@ def main():
         """ihuiedhcid()"""
         # follow_line(instructions)
         # main_tmp()
-        lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
-
+        # lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
+        lines_passed, passed_line, turn_angle = drive_tmp(lines_passed, passed_line, turn_angle)
 
 if __name__ == '__main__':
     sys.exit(main())
