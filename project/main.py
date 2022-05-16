@@ -1,5 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 from copy import copy
+from msilib.schema import ControlCondition
 import sys
 
 # import statistics
@@ -50,17 +51,17 @@ color_list =[]
 
 reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
 "brown": (10, 6, 4),
-"purple": (8, 9, 20), 
-"purple.2": (12, 7, 37), 
-"yellow": (42, 36, 4), 
-"pink_red": (36, 16, 13), 
-"pink_red.2": (30, 15, 20), 
-"olive_green": (12, 15, 4), 
-"olive_green.2": (10, 15, 9), 
-"lime_green": (8, 30, 8), 
-"blue": (8, 19, 22), 
-#"blue.2": (9, 17, 30), 
-#"blue.2": (14, 28, 75), 
+"purple": (8, 9, 20),
+"purple.2": (12, 7, 37),
+"yellow": (42, 36, 4),
+"pink_red": (36, 16, 13),
+"pink_red.2": (30, 15, 20),
+"olive_green": (12, 15, 4),
+"olive_green.2": (10, 15, 9),
+"lime_green": (8, 30, 8),
+"blue": (8, 19, 22),
+#"blue.2": (9, 17, 30),
+#"blue.2": (14, 28, 75),
 "white": (93, 83, 95),
 #"white.2": (40, 38, 36)
 #"orange": (72, 23, 19), #not part of final track
@@ -76,7 +77,7 @@ def median(val_lists):
     for val_list in (val_lists):
         for i, val in enumerate(val_list):
             calc_list[i].append(val)
-            
+
     out_list = []
     for val_list in calc_list:
         out_list.append(sorted(val_list)[int(len(val_list) / 2)])
@@ -110,7 +111,7 @@ def identify_color(rgb, return_with_number=False): #v3
     # add another copy of the problematic color, with different color values.
     # put it in the dict as "black.2": (4, 4, 4)
     # return "black.2".split('.')[0]
-    
+
     rgb = list(copy(rgb)) # don't modify original list
 
     similarity_dict = dict()
@@ -120,15 +121,15 @@ def identify_color(rgb, return_with_number=False): #v3
 
         for i in range(3):
             rgb[i] = max(rgb[i], 1) # avoids division by zero after this for-loop
-            
+
             ref_similarity.append((rgb[i] + 3) / (ref_values[i] + 3)) # the +3 are there to minimize issues with low brightness values.
-        
+
         # explanation for the line below: if the red channel is p% lower than the reference, we want *all* channels to be p% lower than the reference.
         # If this is the case, the color may be the same as the reference color.
         #print(color_name, rgb)
         #print([abs(x-y) for x in ref_similarity for y in ref_similarity])
         difference = sum([abs(x-y) for x in ref_similarity for y in ref_similarity])
-        # We also want to compare overall brightness: 
+        # We also want to compare overall brightness:
         #print(avg(ref_similarity))
         difference += 2 * max(avg(rgb) / avg(ref_values), avg(ref_values) / avg(rgb)) - 1
         #print(max(avg(ref_similarity), 1 / avg(ref_similarity)) - 1)
@@ -202,7 +203,7 @@ def follow_line(colors):
         if len(color_list) > 5:
             color_list.pop(0)
         med_value = median(color_list)
-        
+
         med_color = identify_color(med_value)
         current_color = identify_color(adj_color_left)
 
@@ -211,12 +212,12 @@ def follow_line(colors):
 
         color_multiplier = 1 / avg(reference_rgb[identify_color(adj_color_left, True)])
         # this always looks at the first one in the list!
-        
+
         if len(colors) >= 2 and current_color == colors[1]:
             speed *= 0.15
             angle *= 0.17
         robot.drive(-speed, -angle)
-        
+
         if len(colors) == 1:
             colors = copy_colors_reverse
         elif current_color != "white" and current_color != colors[0] and current_color != colors[1]:
@@ -247,10 +248,10 @@ def follow_line(colors):
             if current_color == "red_pink":
                 relative_brightness -= 0.2
             angle = 75 / relative_brightness #how much the robot turns when colored line is detected
-            
+
             speed = min(50, 20 * relative_brightness - 58)
-            
-                
+
+
         ''''
         if not current_color == "white" and len(route) == 0:
             route.append(current_color)
@@ -273,7 +274,7 @@ def cranelift():
 
 def main_tmp():
 
-    
+
     #correction = (30-left_light.reflection())*2
     correction = left_light.reflection()
     print(correction)
@@ -290,10 +291,12 @@ def main_tmp():
             robot.drive(-50,-5)
 
         elif 15 < correction <= 30: # Starting to detect color
-            robot.drive(-50,-20)
-        
-        elif 1 < correction <= 10: # Dark, at color, turn right a lot
-            robot.drive(70, -3000)
+            robot.drive(-25,-20)
+
+        elif correction <= 15: # Dark, at color, turn right a lot
+            robot.straight(60,0)
+            robot.drive(0, -3000)
+            print('sharp')
 
         elif 61 < correction <= 70 : # Beginging to detect white
             robot.drive(-50, 5)
@@ -303,19 +306,31 @@ def main_tmp():
 
         elif 81 <= correction: #Only white is detected turn left
             robot.drive(-10, 50)
-    
-def drive_tmp(i):
 
+def drive_tmp(times_passed):
+    fortsatt = 0
+    passed_line = False
     correction = left_light.reflection()
-    
-    
-    if correction < 70:
-        robot.drive(-50, 20)
-        print("e")
-    
+    if times_passed % 2 == 0:
+        direction_toggle = robot.drive(-50,20)
+    else:
+        direction_toggle = robot.drive(-50,-20)
+    #--------------------------------------------------
+    if passed_line == False and correction >= 70:
+        direction_toggle
+
+    elif correction < 70:
+        direction_toggle
+        passed_green = True
+        print("On Line")
+
+    elif passed_line == True and correction >= 70:
+        i = i + 1
+        print("Changing direction")
+
 
 def main():
-    
+    lines_passed = 0
     instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
     loop_continue = 0
     calibrate(left_light.rgb())
@@ -326,7 +341,9 @@ def main():
         print("Color: ", left_light.color())
         """ihuiedhcid()"""
         # follow_line(instructions)
-        main_tmp()
+        #main_tmp()
+        drive_tmp(loop_continue)
+        lines_passed = drive_tmp()
 
 
 if __name__ == '__main__':
