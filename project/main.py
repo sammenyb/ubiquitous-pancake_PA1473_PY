@@ -1,6 +1,6 @@
 #!/usr/bin/env pybricks-micropython
 from copy import copy
-from msilib.schema import ControlCondition
+# from msilib.schema import ControlCondition
 import sys
 
 # import statistics
@@ -13,6 +13,7 @@ import sys
 
 # from pybricks.pupdevices import ForceSensor
 import time
+# from matplotlib import lines
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.hubs import EV3Brick
 from pybricks.tools import wait, StopWatch, DataLog
@@ -274,7 +275,6 @@ def cranelift():
 
 def main_tmp():
 
-
     #correction = (30-left_light.reflection())*2
     correction = left_light.reflection()
     print(correction)
@@ -290,12 +290,15 @@ def main_tmp():
         elif 30 < correction < 40: # ini Begining to detect color
             robot.drive(-50,-5)
 
-        elif 15 < correction <= 30: # Starting to detect color
+        elif 20 < correction <= 30: # Starting to detect color
             robot.drive(-25,-20)
 
-        elif correction <= 15: # Dark, at color, turn right a lot
-            robot.straight(60,0)
-            robot.drive(0, -3000)
+        elif correction <= 20: # Dark, at color, turn right a lot
+            passed_line = False
+            lines_passed = 0
+            while lines_passed != 10:
+                lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
+
             print('sharp')
 
         elif 61 < correction <= 70 : # Beginging to detect white
@@ -307,29 +310,50 @@ def main_tmp():
         elif 81 <= correction: #Only white is detected turn left
             robot.drive(-10, 50)
 
-def drive_tmp(times_passed):
-    fortsatt = 0
-    passed_line = False
-    correction = left_light.reflection()
-    if times_passed % 2 == 0:
-        direction_toggle = robot.drive(-50,20)
+def drive_tmp(times_passed,passed_line):
+    print(' ')
+    if int(times_passed) % 2 == 0:
+        print("turning left")
+        robot.drive(-80,120)
+        # direction_toggle = robot.drive(-50,20)
     else:
-        direction_toggle = robot.drive(-50,-20)
+        robot.drive(-80,-120)
+        print("turning right")
+        # direction_toggle = robot.drive(-50,-20)
     #--------------------------------------------------
-    if passed_line == False and correction >= 70:
-        direction_toggle
-
-    elif correction < 70:
-        direction_toggle
-        passed_green = True
+    if left_light.reflection() >= 70 and passed_line == True: # Passed line and on white
+        passed_line = False
+        times_passed += 1
+        print("Passed line and on white")
+    elif left_light.reflection() < 70 and passed_line == False: # On line
         print("On Line")
+        passed_line = True
+    elif left_light.reflection() > 80 and passed_line == False: # On white, haven't passed
+        print("On white, haven't passed")
+    print('Times: ',times_passed)
+    return times_passed,passed_line
 
-    elif passed_line == True and correction >= 70:
-        i = i + 1
-        print("Changing direction")
+
+
+
+
+    # if passed_line == False and left_light.reflection() >= 70:
+    #     direction_toggle
+
+    # elif left_light.reflection() < 70:
+    #     direction_toggle
+    #     passed_line = True
+    #     print("On Line")
+
+    # elif passed_line == True and left_light.reflection() >= 70:
+    #     += 1
+
+    #     print("Changing direction")
 
 
 def main():
+    #turn_angle = 60
+    passed_line = False
     lines_passed = 0
     instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
     loop_continue = 0
@@ -341,9 +365,8 @@ def main():
         print("Color: ", left_light.color())
         """ihuiedhcid()"""
         # follow_line(instructions)
-        #main_tmp()
-        drive_tmp(loop_continue)
-        lines_passed = drive_tmp()
+        # main_tmp()
+        lines_passed, passed_line = drive_tmp(lines_passed,passed_line)
 
 
 if __name__ == '__main__':
