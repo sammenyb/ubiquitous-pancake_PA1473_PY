@@ -2,7 +2,9 @@
 from copy import copy
 import sys
 
-
+# import statistics
+# list_test = [3,2,1,5,5]
+# print(statistics.median([3,2,5,5]))
 # from project import __init__
 # from project import pick_up as pu
 

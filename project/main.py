@@ -271,16 +271,65 @@ def cranelift():
     crane_motor.run_angle(15, -10, wait=True)
     # crane_motor.run_angle(15, 60, wait=True)
 
+def main_tmp():
+
+    
+    #correction = (30-left_light.reflection())*2
+    correction = left_light.reflection()
+    print(correction)
+    if 50 < ultra_sensor.distance() < 100:
+            robot.drive(0,0)
+
+    elif ultra_sensor.distance() < 50:
+        robot.drive(20,0)
+    else:
+        if 40 <= correction <= 60: # Drives straight forward
+            robot.drive(-100,0)
+
+        elif 30 < correction < 40: # ini Begining to detect color
+            robot.drive(-50,-5)
+
+        elif 15 < correction <= 30: # Starting to detect color
+            robot.drive(-50,-20)
+        
+        elif 1 < correction <= 10: # Dark, at color, turn right a lot
+            robot.drive(70, -3000)
+
+        elif 61 < correction <= 70 : # Beginging to detect white
+            robot.drive(-50, 5)
+
+        elif  70 < correction < 80: #a lot of white, turn left
+            robot.drive(-50, 20)
+
+        elif 81 <= correction: #Only white is detected turn left
+            robot.drive(-10, 50)
+    
+def drive_tmp(i):
+
+    correction = left_light.reflection()
+    
+    
+    if correction < 70:
+        robot.drive(-50, 20)
+        print("e")
+    
+
 def main():
+    
     instructions = [identify_color(left_light.rgb()), "olive_green", "blue"]
     loop_continue = 0
     calibrate(left_light.rgb())
     #cranelift()
     reports(instructions)
     while loop_continue == 0:
+        print("Reflection: ", left_light.reflection())
+        print("Color: ", left_light.color())
         """ihuiedhcid()"""
-        follow_line(instructions)
+        # follow_line(instructions)
+        main_tmp()
 
 
+if __name__ == '__main__':
+    sys.exit(main())
 if __name__ == '__main__':
     sys.exit(main())
