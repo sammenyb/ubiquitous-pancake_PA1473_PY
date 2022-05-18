@@ -53,25 +53,8 @@ color_list =[]
 
 
 
-reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
-"brown": (10, 6, 4),
-"purple": (8, 9, 20),
-"purple.2": (12, 7, 37),
-"yellow": (42, 36, 4),
-"pink_red": (36, 16, 13),
-"pink_red.2": (30, 15, 20),
-"olive_green": (12, 15, 4),
-"olive_green.2": (10, 15, 9),
-"lime_green": (8, 30, 8),
-"blue": (8, 19, 22),
-#"blue.2": (9, 17, 30),
-#"blue.2": (14, 28, 75),
-"white": (93, 83, 95),
-#"white.2": (40, 38, 36)
-#"orange": (72, 23, 19), #not part of final track
-#"red": (49, 10, 13), #not part of final track
-#"red.2": (55, 14, 15) #not part of final track
-}
+reference_rgb = {"red_pink": (46, 17, 27), "olive_green": (15, 15, 9), "purple": (12, 10, 35), "blue": (10, 20, 33), "lime_green": (8, 27, 14)}
+
 
 color_calibration = [0, 0, 0]
 
@@ -105,12 +88,12 @@ def ninety_degree_turn():
     print("Executing 90 degree turn")
     robot.straight(-60)
     robot.drive(80, -115)
-    wait(2000)
-    robot.straight(100)
+    wait(2200)
+    robot.straight(80)
     #robot.drive(0, 0)
 
 
-def identify_color(rgb, return_with_number=False): #v3
+def identify_color(rgb, return_with_number=False):
     #PLAN if we have issues with this function:
     # add another copy of the problematic color, with different color values.
     # put it in the dict as "black.2": (4, 4, 4)
@@ -186,7 +169,7 @@ def collision_avoidance():
         robot.straight(-700)
         wait(3000)
         robot.drive(30, 120)
-        wait(300)
+        wait(150)
         return True
     else:
         return False
@@ -230,9 +213,9 @@ def cal_color():
         writer.writerow([key, value])
 
     file.close()
-    
+
     return reference_rgb
-       
+
     # "brown": (10, 6, 4),
     # "purple": (8, 9, 20),
     # "purple.2": (12, 7, 37),
@@ -292,9 +275,22 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
     print(' ')
     print(instructions)
     print(instructions[1])
-   
+
     if collision_avoidance() == True:
-        times_passed = 0  
+        times_passed = 0
+
+    if turn_angle > 130:
+        times_passed +=1
+        passed_line = False
+        turn_angle = 30
+        if int(times_passed) % 2 == 0:
+            robot.drive(-40,turn_angle)
+            wait(3000)
+        else:
+            robot.drive(-40,-turn_angle)
+            wait(3000)
+
+        print("fixed_itself fixed itself fixed\n itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itself")
     if identify_color(left_light.rgb()) == "black":
         global goal_achieved
         goal_achieved = True
@@ -304,17 +300,6 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
         wait(4000)
         robot.straight(0)
         wait(3000)
-    if turn_angle > 130:
-        times_passed +=1
-        passed_line = False
-        turn_angle = 30 
-        if int(times_passed) % 2 == 0:
-            robot.drive(-30,turn_angle)
-            wait(3000)
-        else:
-            robot.drive(-30,-turn_angle)
-            wait(3000)
-        print("fixed_itself fixed itself fixed\n itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itself")
     elif identify_color(left_light.rgb()) == instructions[1] and len(instructions) > 1: # Checks for next path-color
         print(instructions)
         instructions.pop(1)
@@ -322,6 +307,10 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
         ninety_degree_turn()
         times_passed = 1
         print("Does 90 degrees turn")
+    #elif left_light.color() != Color.WHITE and identify_color(left_light.rgb()) not in instructions:
+     #   times_passed = 0
+      #  robot.straight(-200)
+       # wait(50)
     else:
         if int(times_passed) % 2 == 0:
             print("turning left")
@@ -357,7 +346,7 @@ def main():
     # reference_rgb = cal_color()
     passed_line = False
     lines_passed = 0
-    instructions = [identify_color(left_light.rgb()), "olive_green", "blue", "black"]
+    instructions = [identify_color(left_light.rgb()), "olive_green", "purple", "black"]
     print(instructions)
     reverse_instructions = instructions[::-1]
     reverse_instructions.pop(0)
