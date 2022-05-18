@@ -105,7 +105,7 @@ def ninety_degree_turn():
     robot.straight(-60)
     robot.drive(80, -115)
     wait(2000)
-    robot.straight(170)
+    robot.straight(100)
     #robot.drive(0, 0)
 
 
@@ -169,18 +169,18 @@ def collision_avoidance():
 
     vehicle_detected = False
     ultra_distance = ultra_sensor.distance()
-    if ultra_distance < 320:
+    if ultra_distance < 200:
         vehicle_detected = True  #initialize avoid sequence
         print("avoiding collision at " + str(round(time.time() - start_time, 3)) + "s. Distance: " + str(ultra_distance))
 
     if vehicle_detected:
         robot.straight(0)
         wait(2000)
-        return
         robot.turn(-70)
+        robot.straight(200)
+        wait(6000)
+        robot.turn(70)
         robot.straight(-200)
-        robot.turn(90)
-        robot.straight(-300)
 
     return
 
@@ -280,7 +280,7 @@ def pick_up():
     #correction = (30-left_light.reflection())*2
     correction = left_light.reflection()
     print(correction)
-    if :
+    if correction == 0:
             robot.drive(0,0)
 
     elif ultra_sensor.distance() < 50:
@@ -314,6 +314,7 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
     print(' ')
     print(instructions)
     print(instructions[1])
+    collision_avoidance()
     if identify_color(left_light.rgb()) == instructions[1] and len(instructions) > 1: # Checks for next path-color
         instructions.pop(1)
         ninety_degree_turn()
@@ -322,34 +323,33 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
     else:
         if int(times_passed) % 2 == 0:
             print("turning left")
-            robot.drive(-100,turn_angle)
+            robot.drive(-30,turn_angle)
             # direction_toggle = robot.drive(-50,20)
         else:
-            robot.drive(-100,-turn_angle)
+            robot.drive(-30,-turn_angle)
             print("turning right")
             # direction_toggle = robot.drive(-50,-20)
         #--------------------------------------------------
         if passed_line == True and left_light.color() == Color.WHITE: # Passed line and on white
             passed_line = False
-            turn_angle += 15
+            turn_angle += 8
             times_passed += 1
             print("Passed line and on white")
         elif passed_line == False and left_light.color() != Color.WHITE: # On line
             print("On Line")
-            turn_angle = 45
+            turn_angle = 30
             passed_line = True
         elif passed_line == False and left_light.color() == Color.WHITE: # On white, haven't passed
             print("On white, haven't passed")
-            turn_angle +=15
+            turn_angle +=8
         print('Times: ',times_passed)
     return times_passed,passed_line, turn_angle
 
 
 
 
-
 def main():
-    turn_angle = 60
+    turn_angle = 30
     passed_line = False
     lines_passed = 0
     instructions = [identify_color(left_light.rgb()), "olive_green", "pink_red", "blue"]
