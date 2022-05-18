@@ -8,7 +8,7 @@ import sys
 # print(statistics.median([3,2,5,5]))
 # from project import __init__
 # from project import pick_up as pu
-
+import csv
 
 
 # from pybricks.pupdevices import ForceSensor
@@ -27,8 +27,9 @@ from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.robotics import DriveBase
 
-ev3 = EV3Brick()
 
+
+ev3 = EV3Brick()
 # Initialize the motors.
 left_motor = Motor(Port.B)
 right_motor = Motor(Port.C)
@@ -50,7 +51,7 @@ start_time = time.time()
 
 color_list =[]
 
-#def cal_color():
+
 
 reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
 "brown": (10, 6, 4),
@@ -176,95 +177,72 @@ def collision_avoidance():
     if vehicle_detected:
         robot.straight(0)
         wait(2000)
-        robot.turn(-70)
-        robot.straight(200)
+        robot.drive(80, -120)
+        wait(1400)
+        robot.straight(700)
+        wait(3000)
+        robot.straight(0)
         wait(6000)
-        robot.turn(70)
-        robot.straight(-200)
-
-    return
-
-
-
-# def follow_line(colors):
-#     copy_colors_reverse = colors[::-1]
-#     print(copy_colors_reverse)
-#     #print(choosen_warehouse)
-#     global angle, speed, color_list
-#     continue_driving = 0 # does this need to be an int?
-#     while continue_driving == 0:
-#         collision_avoidance()
-#         color_left = left_light.rgb()
-#         if avg(color_left) == 0:
-#             color_left = (1,0,0) #avoid div by 0
-
-#         adj_color_left = [color_calibration[0] * color_left[0], color_calibration[1] * color_left[1], color_calibration[2] * color_left[2]]
-#         for i in range(len(adj_color_left)):
-#             adj_color_left[i] = max(adj_color_left[i], 1)
-
-#         color_list.append(adj_color_left)
-#         if len(color_list) > 5:
-#             color_list.pop(0)
-#         med_value = median(color_list)
-
-#         med_color = identify_color(med_value)
-#         current_color = identify_color(adj_color_left)
+        robot.straight(-700)
+        wait(3000)
+        robot.drive(30, 120)
+        wait(300)
+        return True
+    else:
+        return False
 
 
-#         robot_status(status="Searching for " + str(colors) + ", and following " + str(current_color) + " line")
+def cal_color():
+    print('')
+    reference_rgb = {}
+    reference_rgb["blue"] = left_light.rgb()
+    print("TRUE RGB Blue: ",left_light.rgb())
 
-#         color_multiplier = 1 / avg(reference_rgb[identify_color(adj_color_left, True)])
-#         # this always looks at the first one in the list!
+    wait(5000)
+    ev3.speaker.beep()
+    reference_rgb["red_pink"] = left_light.rgb()
+    print("TRUE RGB Red_Pink: ",left_light.rgb())
 
-#         if len(colors) >= 2 and current_color == colors[1]:
-#             speed *= 0.15
-#             angle *= 0.17
-#         robot.drive(-speed, -angle)
+    wait(5000)
+    ev3.speaker.beep()
+    reference_rgb["purple"] = left_light.rgb()
+    print("TRUE RGB Purple: ",left_light.rgb())
 
-#         if len(colors) == 1:
-#             colors = copy_colors_reverse
-#         elif current_color != "white" and current_color != colors[0] and current_color != colors[1]:
-#             angle = 0
-#             speed = 30
-#         elif len(colors) > 1 and med_color == colors[1]:
-#             colors.pop(0)
-#             print("changing color - found ", current_color)
-#             print(colors)
-#             if colors[0] != "black":
-#                 ninety_degree_turn()
-#             else:
-#                 print("detected black. Turning around.")
-#                 robot.turn(170)
-#         elif current_color == "white":
-#             angle = -26# * avg(color_left) * color_multiplier
-#             speed = 55
-#         elif 2.2 < avg(color_left) * color_multiplier and current_color != colors[0]:
-#             angle = -12 * avg(color_left) * color_multiplier
-#             speed = 40
-#         elif 1.2 <= avg(color_left) * color_multiplier <= 2.2 and current_color != colors[0]:
-#             angle = 0
-#             speed = 45
-#         else:
-#             relative_brightness = (avg(color_left) * color_multiplier) ** 2
-#             if relative_brightness < 0.8:
-#                 relative_brightness = 0.8
-#             if current_color == "red_pink":
-#                 relative_brightness -= 0.2
-#             angle = 75 / relative_brightness #how much the robot turns when colored line is detected
+    wait(5000)
+    ev3.speaker.beep()
+    reference_rgb["red_pink"] = left_light.rgb()
+    print("TRUE RGB 2: ",left_light.rgb())
 
-#             speed = min(50, 20 * relative_brightness - 58)
+    wait(5000)
+    ev3.speaker.beep()
+    reference_rgb["olive_green"] = left_light.rgb()
+    print("TRUE RGB Olive_green: ",left_light.rgb())
 
+    wait(5000)
+    ev3.speaker.beep()
+    reference_rgb["lime_green"] = left_light.rgb()
+    print("TRUE RGB lime_green: ",left_light.rgb())
 
-#         ''''
-#         if not current_color == "white" and len(route) == 0:
-#             route.append(current_color)
-#             print("route: " + str(route))
-#         elif not current_color == "white" and (str(route[-1]) != str(current_color)):
-#             route.append(current_color)
-#             print("route: " + str(route))
-#             print("Test route:" + str(route[-1]) + " , " + str(current_color))
-#         print("speed " + str(speed) + ", angle " + str(angle))
-#         '''
+    print('Dict',reference_rgb)
+    file = open("colors.csv", "w")
+    writer = csv.writer(file)
+    for key, value in reference_rgb.items():
+        writer.writerow([key, value])
+
+    file.close()
+    
+    return reference_rgb
+       
+    # "brown": (10, 6, 4),
+    # "purple": (8, 9, 20),
+    # "purple.2": (12, 7, 37),
+    # "yellow": (42, 36, 4),
+    # "pink_red": (36, 16, 13),
+    # "pink_red.2": (30, 15, 20),
+    # "olive_green": (12, 15, 4),
+    # "olive_green.2": (10, 15, 9),
+    # "lime_green": (8, 30, 8),
+    # "blue": (8, 19, 22)
 
 def reports(instructions):
     print('instructions that will be performed: ', instructions)
@@ -314,9 +292,33 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
     print(' ')
     print(instructions)
     print(instructions[1])
-    collision_avoidance()
-    if identify_color(left_light.rgb()) == instructions[1] and len(instructions) > 1: # Checks for next path-color
+   
+    if collision_avoidance() == True:
+        times_passed = 0  
+    if identify_color(left_light.rgb()) == "black":
+        global goal_achieved
+        goal_achieved = True
+        robot.straight(0)
+        wait(10000)
+        robot.drive(80, -115)
+        wait(4000)
+        robot.straight(0)
+        wait(3000)
+    if turn_angle > 130:
+        times_passed +=1
+        passed_line = False
+        turn_angle = 30 
+        if int(times_passed) % 2 == 0:
+            robot.drive(-30,turn_angle)
+            wait(3000)
+        else:
+            robot.drive(-30,-turn_angle)
+            wait(3000)
+        print("fixed_itself fixed itself fixed\n itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itselffixed_itself fixed itself fixed itself")
+    elif identify_color(left_light.rgb()) == instructions[1] and len(instructions) > 1: # Checks for next path-color
+        print(instructions)
         instructions.pop(1)
+        print(instructions)
         ninety_degree_turn()
         times_passed = 1
         print("Does 90 degrees turn")
@@ -350,21 +352,26 @@ def drive_tmp(times_passed,passed_line, turn_angle, instructions):
 
 def main():
     turn_angle = 30
+    goal_achieved = False
+    global reference_rgb
+    # reference_rgb = cal_color()
     passed_line = False
     lines_passed = 0
-    instructions = [identify_color(left_light.rgb()), "olive_green", "pink_red", "blue"]
+    instructions = [identify_color(left_light.rgb()), "olive_green", "blue", "black"]
     print(instructions)
+    reverse_instructions = instructions[::-1]
+    reverse_instructions.pop(0)
     loop_continue = 0
     # calibrate(left_light.rgb())
     #cranelift()
     reports(instructions)
+
     while loop_continue == 0:
-        #print("Reflection: ", left_light.reflection())
+        if goal_achieved == True:
+            lines_passed, passed_line, turn_angle = drive_tmp(lines_passed, passed_line, turn_angle, reverse_instructions)
         print("Color: ", left_light.color())
         """ihuiedhcid()"""
         lines_passed, passed_line, turn_angle = drive_tmp(lines_passed, passed_line, turn_angle, instructions)
 
-if __name__ == '__main__':
-    sys.exit(main())
 if __name__ == '__main__':
     sys.exit(main())
