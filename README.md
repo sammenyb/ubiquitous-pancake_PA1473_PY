@@ -1,5 +1,5 @@
-## Project 2 
-# Made by group 3
+# Project 2 
+## Made by group 3
 
 ## Members of the group
 * Samuel Nyberg sany21@student.bth.se
