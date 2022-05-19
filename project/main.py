@@ -1,14 +1,9 @@
 #!/usr/bin/env pybricks-micropython
 from copy import copy
-# from msilib.schema import ControlCondition
 import sys
-
-import csv
-
 
 # from pybricks.pupdevices import ForceSensor
 import time
-# from matplotlib import lines
 from pybricks.media.ev3dev import SoundFile, ImageFile
 from pybricks.hubs import EV3Brick
 from pybricks.tools import wait, StopWatch, DataLog
@@ -21,7 +16,6 @@ from pybricks import robotics
 from pybricks.ev3devices import Motor, ColorSensor, UltrasonicSensor
 from pybricks.parameters import Port, Stop, Direction, Button, Color
 from pybricks.robotics import DriveBase
-
 
 
 ev3 = EV3Brick()
@@ -40,53 +34,25 @@ angle = 0
 route = []
 start_time = time.time()
 
-color_list =[]
-
-
-
 reference_rgb = {"red_pink": (46, 17, 27), "olive_green": (15, 15, 9), "purple": (12, 10, 35), "blue": (10, 20, 33), "lime_green": (8, 27, 14)}
 
-
-#color_calibration = [0, 0, 0]
-
-# def median(val_lists):
-#     """only use with lists of uneven lengths"""
-#     calc_list = [[], [], []]
-#     for val_list in (val_lists):
-#         for i, val in enumerate(val_list):
-#             calc_list[i].append(val)
-
-#     out_list = []
-#     for val_list in calc_list:
-#         out_list.append(sorted(val_list)[int(len(val_list) / 2)])
-#     return out_list
-
-# def calibrate(rgb):
-#     global color_calibration
-#     rgb = list(rgb)
-#     for i in range(len(rgb)):
-#             rgb[i] = max(rgb[i], 1)
-#     color_calibration = [reference_rgb["pink_red"][0] / rgb[0], reference_rgb["pink_red"][1] / rgb[1], reference_rgb["pink_red"][2] / rgb[2]]
-#     #color_calibration = [0,0,0]
-#     print("color_calibration:", color_calibration)
-
 def ninety_degree_turn():
+    """Turns the robot ninety degrees to the right, and tries to reposition the robot so that the color sensor ends up approximately where it was before the turn."""
     print("Executing 90 degree turn")
     robot.straight(-60)
     robot.drive(80, -115)
     wait(2200)
     robot.straight(80)
-    #robot.drive(0, 0)
-
 
 def identify_color(rgb, return_with_number=False):
-    #PLAN if we have issues with this function:
+    """Attempts to identify the color in rgb, which should be a list or tuple with red, green, and blue color values expressed as numbers between 0 and 100.\n
+    Returns the name of the identified color as a string."""
+    # Potential solution if we have issues with this function:
     # add another copy of the problematic color, with different color values.
     # put it in the dict as "black.2": (4, 4, 4)
     # return "black.2".split('.')[0]
 
     rgb = list(copy(rgb)) # don't modify original list
-
     similarity_dict = dict()
 
     for color_name, ref_values in reference_rgb.items():
@@ -94,49 +60,34 @@ def identify_color(rgb, return_with_number=False):
 
         for i in range(3):
             rgb[i] = max(rgb[i], 1) # avoids division by zero after this for-loop
-
             ref_similarity.append((rgb[i] + 3) / (ref_values[i] + 3)) # the +3 are there to minimize issues with low brightness values.
 
         # explanation for the line below: if the red channel is p% lower than the reference, we want *all* channels to be p% lower than the reference.
         # If this is the case, the color may be the same as the reference color.
-        #print(color_name, rgb)
-        #print([abs(x-y) for x in ref_similarity for y in ref_similarity])
         difference = sum([abs(x-y) for x in ref_similarity for y in ref_similarity])
+
         # We also want to compare overall brightness:
-        #print(avg(ref_similarity))
         difference += 2 * max(avg(rgb) / avg(ref_values), avg(ref_values) / avg(rgb)) - 1
-        #print(max(avg(ref_similarity), 1 / avg(ref_similarity)) - 1)
+
         similarity_dict[color_name] = difference
 
-    #not super useful prints
-    # print(str(rgb))
-    # print(similarity_dict)
-    # print("min: ",  min(similarity_dict, key=similarity_dict.get))
-
-    #useful print
     closest = sorted(similarity_dict, key=similarity_dict.get)
     print(str(round(time.time() - start_time, 3)) + "s:", str(rgb), " - closest colors:", closest[0], ": ", round(similarity_dict[closest[0]], 2), ", ", closest[1], ": ", round(similarity_dict[closest[1]], 2), ", ", closest[2], ": ", round(similarity_dict[closest[2]], 2))
+
     if return_with_number:
         return min(similarity_dict, key=similarity_dict.get)
     else:
         return min(similarity_dict, key=similarity_dict.get).split(".")[0]
 
 
-# def robot_status(status):
-#     print("The robot is " + str(status) + "right now")
-
-# def feedback(color,beep_duration, beep_frequency):
-
-#     # speaker.beep(beep_frequency, beep_duration)
-#     # light.on(color)
-#     return
-
 def avg(list_of_stuff):
+    """Returns the average value in a list."""
     return sum(list_of_stuff) / len(list_of_stuff)
 
 
 def collision_avoidance():
-
+    """Detects an imminent collision with ultra_sensor, and makes an evasive maneuver if needed.\n
+    Returns a bool that indicates whether or not a collision avoidance attempt was made."""
     vehicle_detected = False
     ultra_distance = ultra_sensor.distance()
     if ultra_distance < 200:
@@ -161,7 +112,9 @@ def collision_avoidance():
         return False
 
 
-def follow_line(times_passed,passed_line, turn_angle, instructions):
+def follow_line(times_passed: int,passed_line: bool, turn_angle: int, instructions: list[str]):
+    """Initiates the following of the lines.\n
+    Returns: times_passed: int, passed_line: bool, turn_angle: int"""
     print(' ')
     print(instructions)
     print(instructions[1])
@@ -196,19 +149,13 @@ def follow_line(times_passed,passed_line, turn_angle, instructions):
         ninety_degree_turn()
         times_passed = 1
         print("Does 90 degrees turn")
-    #elif left_light.color() != Color.WHITE and identify_color(left_light.rgb()) not in instructions:
-     #   times_passed = 0
-      #  robot.straight(-200)
-       # wait(50)
     else:
         if int(times_passed) % 2 == 0:
             print("turning left")
             robot.drive(-30,turn_angle)
-            # direction_toggle = robot.drive(-50,20)
         else:
             robot.drive(-30,-turn_angle)
             print("turning right")
-            # direction_toggle = robot.drive(-50,-20)
         #--------------------------------------------------
         if passed_line == True and left_light.color() == Color.WHITE: # Passed line and on white
             passed_line = False
@@ -223,12 +170,13 @@ def follow_line(times_passed,passed_line, turn_angle, instructions):
             print("On white, haven't passed")
             turn_angle +=8
         print('Times: ',times_passed)
-    return times_passed,passed_line, turn_angle
+    return times_passed, passed_line, turn_angle
 
 
 
 
 def main():
+    """Main function. Runs at start."""
     turn_angle = 30
     goal_achieved = False
     global reference_rgb
@@ -248,3 +196,4 @@ def main():
 
 if __name__ == '__main__':
     sys.exit(main())
+
