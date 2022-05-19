@@ -85,24 +85,12 @@ def cal_color():
 def skriv():
     reference_rgb = {'red_pink': (62, 60, 98), 'olive_green': (62, 60, 98), 'purple': (62, 60, 98), 'blue': (62, 60, 98), 'lime_green': (62, 60, 98)}
 
-    # reference_rgb = {"black": (4, 5, 2),  # zeroes are NOT allowed in the values of this list.
-    # "brown": (10, 6, 4),
-    # "purple": (8, 9, 20),
-    # "purple.2": (12, 7, 37),
-    # "yellow": (42, 36, 4),
-    # "pink_red": (36, 16, 13),
-    # "pink_red.2": (30, 15, 20),
-    # "olive_green": (12, 15, 4),
-    # "olive_green.2": (10, 15, 9),
-    # "lime_green": (8, 30, 8),
-    # "blue": (8, 19, 22)}
-
     with open('colors.json', 'w') as f:
         json.dump(reference_rgb, f)
 
 
 def main():
-    # cal_color()
-    skriv()
+    cal_color()
+    # skriv()
 if __name__ == '__main__':
     sys.exit(main())
