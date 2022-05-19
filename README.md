@@ -1,4 +1,4 @@
-# -- Replace with the name of your project --
+ubiquitous-pancake_PA1473_PY
 
 ## Members of the group
 * Samuel Nyberg sany21@student.bth.se
@@ -11,7 +11,6 @@ A linefollowing script for ev3 robots that can follow a predetermied path and av
 
 
 ## User stories
--- Extend the list with user stories. Also use the marking method for complete and incomplete user stories --
 
 Have a truck pick up an item from an elevated surface
 - [X] This is a user story the is incomplete 
